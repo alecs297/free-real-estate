@@ -1,0 +1,29 @@
+{
+  "name": "tobechangedlater",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/RootMestudy/noname.git"
+  },
+  "author": "Fouiny & RootMe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/RootMestudy/noname/issues"
+  },
+  "homepage": "https://gitlab.com/RootMestudy/noname#readme",
+  "dependencies": {
+    "better-sqlite3": "^7.1.2",
+    "crypto": "^1.0.1",
+    "enmap": "^5.8.4",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "speakeasy": "^2.0.0",
+    "unirest": "^0.6.0"
+  }
+}

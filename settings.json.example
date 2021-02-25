@@ -1,0 +1,7 @@
+{
+    "name": "Unraid by SFR (non)",
+    "cookies_secret": "",
+    "recaptcha_secret": "",
+    "hostname": "localhost",
+    "port": 1337
+}
