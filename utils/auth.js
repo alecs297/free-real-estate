@@ -43,13 +43,11 @@ module.exports = {
 
     // Génère un token 2fa
     gen2FASecret: function(data, username) {
-        return _2fa.generateSecret(
-            {
-                length: 32,
-                symbols: false,
-                name: `@${username} (${data.settings.name})`
-            }
-        )
+        return _2fa.generateSecret({
+            length: 32,
+            symbols: false,
+            name: `@${username} (${data.settings.name})`
+        })
     },
 
     // Génère un code 2fa
@@ -57,7 +55,7 @@ module.exports = {
         return _2fa.totp({
             secret: secret,
             encoding: 'base32'
-          });
+        });
     },
 
     // Hash un mdp avec un salt
@@ -95,7 +93,7 @@ module.exports = {
     // Vérifie la vérification Captcha
     checkCaptcha: async function(data, token, action) {
         let res;
-        await unirest.post(`https://www.google.com/recaptcha/api/siteverify`).send({secret: data.settings.recaptcha_secret, response: token}).then(async response => {
+        await unirest.post(`https://www.google.com/recaptcha/api/siteverify`).send({ secret: data.settings.recaptcha_secret, response: token }).then(async response => {
             if (response.body) {
                 res = response.body;
             }
@@ -115,18 +113,21 @@ module.exports = {
             if (user.password === this.hashPass(password, user.salt)) {
                 if (user._2fa) {
                     if (!await this.check2FA(data, req.body._2fa, user.username)) {
-                        return res.json({error: "Le code de double authentification n'est pas valide.", _2fa: true});
+                        return res.json({ error: "Le code de double authentification n'est pas valide.", _2fa: true });
                     }
+                }
+                for (role in JSON.parse(user.roles)) {
+                    if (JSON.parse(user.roles)[role] === "admin") req.session.admin = true;
                 }
                 req.session.username = user.username;
                 req.session.id = user.id;
                 req.session.mail = user.mail;
-                res.json({url: "/panel"});
+                res.json({ url: "/panel" });
             } else {
-                res.json({error: "Mauvaise combinaison login / mot de passe"});
+                res.json({ error: "Mauvaise combinaison login / mot de passe" });
             }
         } else {
-            res.json({error: "Ce login n'existe pas"})
+            res.json({ error: "Ce login n'existe pas" })
         }
     },
 
@@ -155,15 +156,30 @@ module.exports = {
                     req.session.username = user.username;
                     req.session.id = user.id;
                     req.session.mail = user.mail;
-                    res.json({url: "/panel"});
+                    res.json({ url: "/panel" });
                 } else {
-                    res.json({error: "Nom d'utilisateur / email déjà utilisé"});
+                    res.json({ error: "Nom d'utilisateur / email déjà utilisé" });
                 }
             } else {
-                res.json({error: "Mauvais formattage"});
+                res.json({ error: "Mauvais formattage" });
             }
         } else {
-            res.json({url: "/panel"});
+            res.json({ url: "/panel" });
+        }
+    },
+
+    // Créée un utilisateur
+    createUser: async function(data, username, req, res) {
+        if (req.session.admin) {
+            let password = this.genSalt();
+            let mail = `${username}@eisti.eu`;
+            if (this.checkUsername(username) && this.checkAvailableMail(data, mail) && this.checkAvailableUsername(data, username)) {
+                await this.executeRegistration(data, username, mail, password, req.ip);
+                let user = await data.getUserByUsername.get(username);
+                res.json({ username: user.username, password: password });
+            } else {
+                res.json({ error: "Utilisateur existant ou incorrect" });
+            }
         }
     },
 
