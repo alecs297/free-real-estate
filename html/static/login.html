@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Coucou</title>
-    </head>
-    <body>
-        <h1>Test login 2fa et recaptcha (:</h1>
-        <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-        <form id="form" action="javascript:;">
-            <label>Login</label>
-            <input name="login" type="text">
-            <label>Mot de passe</label>
-            <input name="password" type="password">
-            <div id="2fa" hidden>
+
+<head>
+    <title>Coucou</title>
+</head>
+
+<body>
+    <h1>Test login 2fa et recaptcha (:</h1>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <form id="form" action="javascript:;">
+        <label>Login</label>
+        <input name="username" type="text">
+        <label>Mot de passe</label>
+        <input name="password" type="password">
+        <div id="2fa" hidden>
             <label>Code de double authentification</label>
             <input name="_2fa" type="text">
-            </div>
-            <div id="error" hidden></div>
-            <div class="g-recaptcha" data-sitekey="6Lcco7QZAAAAAPWlPSAmfCgGv9JtzHEJW1QUajD0"></div>
-            <button id="button">login lol</button>
-        </form>
-        <script src="/assets/js/login.js"></script>
-    </body>
+        </div>
+        <div id="error" hidden></div>
+        <div class="g-recaptcha" data-sitekey="6Lcco7QZAAAAAPWlPSAmfCgGv9JtzHEJW1QUajD0"></div>
+        <button id="button">login lol</button>
+    </form>
+    <script src="/assets/js/login.js"></script>
+</body>
+
 </html>
