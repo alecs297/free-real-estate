@@ -19,6 +19,5 @@ exports.run = async(data, path, req, res, next) => {
     }
 }
 exports.disabled = false;
-exports.user_only = false;
 exports.admin_only = true;
 exports.method = "GET";

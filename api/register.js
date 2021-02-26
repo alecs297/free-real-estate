@@ -7,6 +7,6 @@ exports.run = async(data, path, req, res) => {
         res.json({ error: "Paramètres incomplets" });
     }
 }
-exports.disabled = false;
+exports.disabled = true;
 exports.method = "POST";
-exports.captcha = false;
+exports.captcha = true;

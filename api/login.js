@@ -9,4 +9,4 @@ exports.run = async(data, path, req, res) => {
 }
 exports.disabled = false;
 exports.method = "POST";
-exports.captcha = false;
+exports.captcha = true;
